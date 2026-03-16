@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Signup</title>
+		<style>
+			label {
+				display: block;
+			}
+		</style>
+	</head>
+	<body>
+		<form action="/signup" method="post">
+			<label for="username">
+				Enter username:
+				<input type="text" name="username" id="username" />
+			</label>
+			<label for="firstname">
+				First name:
+				<input type="text" name="firstname" id="firstname" />
+			</label>
+			<label for="lastname">
+				Last name:
+				<input type="lastname" name="lastname" id="lastname" />
+			</label>
+			<div class="pass">
+				<label for="password">
+					Password:
+					<input type="password" name="password" id="password" />
+				</label>
+			</div>
+			<button type="submit">Submit</button>
+		</form>
+	</body>
+</html>
