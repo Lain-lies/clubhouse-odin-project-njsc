@@ -35,4 +35,28 @@ async function insertNewUsers(values) {
 	}
 }
 
-module.exports = { getPosts, insertNewUsers };
+async function getUser(username) {
+	try {
+		const { rows } = await pool.query(
+			"SELECT * FROM users WHERE username = $1;",
+			[username],
+		);
+		console.log(rows);
+		return rows[0];
+	} catch (error) {
+		throw new Error("Failed fetching user");
+	}
+}
+
+async function getUserById(userId) {
+	try {
+		const { rows } = await pool.query("SELECT * FROM users WHERE id = $1;", [
+			userId,
+		]);
+		return rows[0];
+	} catch (error) {
+		throw new Error("Failed fetching user");
+	}
+}
+
+module.exports = { getPosts, insertNewUsers, getUser, getUserById };

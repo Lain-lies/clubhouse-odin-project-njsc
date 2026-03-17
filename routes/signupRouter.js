@@ -26,6 +26,8 @@ const validators = [
 		.trim()
 		.escape(),
 ];
+
+
 signupRouter.post(
 	"/",
 	express.urlencoded({ extended: true }),

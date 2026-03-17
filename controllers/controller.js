@@ -1,4 +1,5 @@
 const { getPosts, insertNewUsers } = require("../db/queries");
+const { generatePassword } = require("../authentication/auth");
 const bcrypt = require("bcryptjs");
 
 function getIndexController(req, res) {
@@ -8,7 +9,7 @@ function getIndexController(req, res) {
 async function handleSignUpController(req, res) {
 	const salt = await bcrypt.genSalt(12);
 	try {
-		const hashed = await bcrypt.hash(req.body.password, salt);
+		const hashed = await generatePassword(req.body.password);
 		const values = [
 			req.body.username,
 			req.body.firstname,
