@@ -9,6 +9,12 @@
 		<h1>Welcome to Mickey Mouse Clubhouse</h1>
 
 		<% if(isAuthenticated){ %>
+			<form action="/createPost" method="POST">
+				<label for = "newpost">
+					Create new posts: <input id = "newpost" name ="newpost"  type="text">
+				</label>
+				<button type = "submit">Submit</button>
+			</form>
 			<ul>
 				<% posts.forEach(post => { %>
 					<li><%-include('post', {post})%></li>

@@ -1,19 +1,21 @@
-const { getPosts, insertNewUsers } = require("../db/queries");
+const { getPosts, insertNewUsers, insertNewPost } = require("../db/queries");
 const { generatePassword } = require("../authentication/auth");
 const bcrypt = require("bcryptjs");
 
 async function getIndexController(req, res) {
-	const authenticated = req.isAuthenticated();
-	if (authenticated) {
-		const posts = await getPosts(authenticated);
-		res.render("index", { posts: posts, isAuthenticated: authenticated });
+	if (req.isAuthenticated()) {
+		try {
+			const posts = await getPosts();
+			res.render("index", { posts: posts, isAuthenticated: true });
+		} catch (error) {
+			console.error(error);
+		}
 	} else {
-		res.render("index", { isAuthenticated: authenticated });
+		res.render("index", { isAuthenticated: false });
 	}
 }
 
 async function handleSignUpController(req, res) {
-	const salt = await bcrypt.genSalt(12);
 	try {
 		const hashed = await generatePassword(req.body.password);
 		const values = [
@@ -30,4 +32,17 @@ async function handleSignUpController(req, res) {
 	}
 }
 
-module.exports = { getIndexController, handleSignUpController };
+async function newPostController(req, res) {
+	try {
+		await insertNewPost([req.body.newpost, req.user.id]);
+		res.redirect("/");
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+module.exports = {
+	getIndexController,
+	handleSignUpController,
+	newPostController,
+};
