@@ -18,8 +18,8 @@ async function verifyCallback(username, password, done) {
 const authStrategy = new LocalStrategy(verifyCallback);
 
 passport.use(authStrategy);
-passport.serializeUser((user, done) => done(null, user.id));
-passport.deserializeUser(async (userId, done) => {
+passport.serializeUser((user, done) => done(null, user.id)); // runs on auth 
+passport.deserializeUser(async (userId, done) => { //runs on req
 	try {
 		const user = await getUserById(userId);
 		done(null, user);

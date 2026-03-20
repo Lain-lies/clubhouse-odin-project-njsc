@@ -2,8 +2,14 @@ const { getPosts, insertNewUsers } = require("../db/queries");
 const { generatePassword } = require("../authentication/auth");
 const bcrypt = require("bcryptjs");
 
-function getIndexController(req, res) {
-	res.render("index", {});
+async function getIndexController(req, res) {
+	const authenticated = req.isAuthenticated();
+	if (authenticated) {
+		const posts = await getPosts(authenticated);
+		res.render("index", { posts: posts, isAuthenticated: authenticated });
+	} else {
+		res.render("index", { isAuthenticated: authenticated });
+	}
 }
 
 async function handleSignUpController(req, res) {

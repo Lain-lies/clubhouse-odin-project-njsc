@@ -31,7 +31,7 @@ loginRouter.post(
 		next();
 	},
 	passport.authenticate("local"),
-	(req, res) => res.send("<h1>Logged in Successfully<h1>"),
+	(req, res) => res.redirect("./"),
 );
 
 module.exports = loginRouter;
